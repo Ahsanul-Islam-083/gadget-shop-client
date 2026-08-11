@@ -6,7 +6,7 @@ export interface CategoryInput {
 }
 
 export function listCategories(params: ListParams = {}, signal?: AbortSignal): Promise<Paginated<Category>> {
-  return api.get<Paginated<Category>>("/categories", params as unknown as Record<string, unknown>, signal);
+  return api.list<Category>("/categories", params as unknown as Record<string, unknown>, signal);
 }
 
 export function fetchCategory(id: string): Promise<Category> {

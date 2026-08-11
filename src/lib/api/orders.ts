@@ -12,7 +12,7 @@ export function createOrder(): Promise<Order> {
 }
 
 export function listOrders(params: OrderListParams = {}, signal?: AbortSignal): Promise<Paginated<Order>> {
-  return api.get<Paginated<Order>>("/orders", params as unknown as Record<string, unknown>, signal);
+  return api.list<Order>("/orders", params as unknown as Record<string, unknown>, signal);
 }
 
 export function fetchOrder(id: string): Promise<Order> {

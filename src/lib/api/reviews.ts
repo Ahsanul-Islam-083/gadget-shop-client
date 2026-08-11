@@ -15,7 +15,7 @@ export interface ReviewListParams {
 }
 
 export function listReviews(params: ReviewListParams = {}, signal?: AbortSignal): Promise<Paginated<Review>> {
-  return api.get<Paginated<Review>>("/reviews", params as unknown as Record<string, unknown>, signal);
+  return api.list<Review>("/reviews", params as unknown as Record<string, unknown>, signal);
 }
 
 export function createReview(input: ReviewInput): Promise<Review> {

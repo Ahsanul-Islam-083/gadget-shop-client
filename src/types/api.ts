@@ -19,9 +19,17 @@ export interface User {
   name: string;
   email: string;
   role: UserRole;
+  image?: string | null;
   isDeleted?: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface UpdateMeInput {
+  name?: string;
+  image?: string | null;
+  password?: string;
+  currentPassword?: string;
 }
 
 export interface AuthResponse {

@@ -10,10 +10,10 @@ import {
   type ReactNode,
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { fetchMe, login as loginRequest, register as registerRequest } from "@/lib/api/auth";
+import { fetchMe, login as loginRequest, register as registerRequest, updateMe as updateMeRequest } from "@/lib/api/auth";
 import { ApiError, UNAUTHORIZED_EVENT } from "@/lib/api/client";
 import { clearToken, getToken, setToken } from "@/lib/token-store";
-import type { User } from "@/types/api";
+import type { UpdateMeInput, User } from "@/types/api";
 
 export type AuthStatus = "loading" | "authed" | "anon";
 
@@ -24,6 +24,7 @@ interface AuthContextValue {
   login: (email: string, password: string) => Promise<User>;
   register: (name: string, email: string, password: string) => Promise<User>;
   completeOAuth: (oauthToken: string) => Promise<User>;
+  updateProfile: (data: UpdateMeInput) => Promise<User>;
   logout: () => void;
 }
 
@@ -116,14 +117,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [applySession],
   );
 
+  const updateProfile = useCallback(
+    async (data: UpdateMeInput) => {
+      const updated = await updateMeRequest(data);
+      setUser(updated);
+      return updated;
+    },
+    [],
+  );
+
   const logout = useCallback(() => {
     clearToken();
     applyAnon();
   }, [applyAnon]);
 
   const value = useMemo(
-    () => ({ user, token, status, login, register, completeOAuth, logout }),
-    [user, token, status, login, register, completeOAuth, logout],
+    () => ({ user, token, status, login, register, completeOAuth, updateProfile, logout }),
+    [user, token, status, login, register, completeOAuth, updateProfile, logout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
