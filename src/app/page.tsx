@@ -65,7 +65,7 @@ export default function HomePage() {
     let cancelled = false;
 
     Promise.all([
-      listProducts({ sortBy: "newest", pageSize: 8 }),
+      listProducts({ sortBy: "newest", pageSize: 4 }),
       listCategories({ page: 1, pageSize: 6 }),
     ])
       .then(([prodRes, catRes]) => {
@@ -347,14 +347,14 @@ export default function HomePage() {
           </div>
 
           {loading ? (
-            <ProductGridSkeleton count={8} />
+            <ProductGridSkeleton count={4} />
           ) : products.length === 0 ? (
             <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center dark:border-slate-800 dark:bg-slate-900">
               <p className="text-slate-500">No hardware drops found in armory.</p>
             </div>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {products.map((p) => (
+              {products.slice(0, 4).map((p) => (
                 <ProductCard key={p.id} product={p} />
               ))}
             </div>
@@ -365,7 +365,7 @@ export default function HomePage() {
               href="/products"
               className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-8 py-3.5 font-heading text-sm font-bold text-slate-900 shadow-sm transition hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:text-cyan-600 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:hover:border-cyan-400/50 dark:hover:text-cyan-400"
             >
-              <span>Explore Complete Armory ({products.length}+ Items)</span>
+              <span>Explore Complete Armory</span>
               <span>→</span>
             </Link>
           </div>
