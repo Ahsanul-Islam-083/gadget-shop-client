@@ -6,12 +6,14 @@ import { motion } from "framer-motion";
 import { listProducts } from "@/lib/api/products";
 import { listCategories } from "@/lib/api/categories";
 import { ProductCard } from "@/components/products/product-card";
-import { ProductGridSkeleton } from "@/components/ui/skeleton";
+import {
+  ProductGridSkeleton,
+  ProductCategoryGridSkeleton,
+} from "@/components/ui/skeleton";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { CountdownTimer } from "@/components/ui/countdown-timer";
 import { toast } from "@/components/admin/toast";
 import type { Category, Product } from "@/types/api";
-import { Spinner } from "@/components/ui/spinner";
 
 const CATEGORY_ICONS: Record<string, string> = {
   Smartphones: "📱",
@@ -279,11 +281,11 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {loading ? (
-              <Spinner />
-            ) : (
-              categories.map((cat, idx) => {
+          {loading ? (
+            <ProductCategoryGridSkeleton count={6} />
+          ) : (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {categories.map((cat, idx) => {
                 const icon = CATEGORY_ICONS[cat.name] ?? "⚡";
                 return (
                   <Link
@@ -317,7 +319,8 @@ export default function HomePage() {
                   </Link>
                 );
               })}
-          </div>
+            </div>
+          )}
         </div>
       </section>
 

@@ -52,6 +52,54 @@ export function ProductGridSkeleton({ count = 12 }: { count?: number }) {
   );
 }
 
+/* Product category card skeleton — matches CategoryCard in category matrix */
+export function ProductCategorySkeleton() {
+  return (
+    <div
+      aria-hidden="true"
+      className="flex h-full flex-col justify-between rounded-2xl border border-neutral-200/80 bg-white p-6 shadow-sm dark:border-neutral-800/80 dark:bg-neutral-900/60"
+    >
+      <div>
+        <div className="flex items-start justify-between">
+          {/* Category icon placeholder */}
+          <SkeletonBox className="h-12 w-12 rounded-xl" />
+          {/* Category tag/index badge */}
+          <SkeletonBox className="h-6 w-16 rounded-full" />
+        </div>
+        {/* Category title */}
+        <SkeletonBox className="mt-4 h-6 w-3/5" />
+        {/* Category description lines */}
+        <SkeletonBox className="mt-2 h-3.5 w-full" />
+        <SkeletonBox className="mt-1.5 h-3.5 w-4/5" />
+      </div>
+
+      {/* Action link */}
+      <div className="mt-5 flex items-center gap-1.5">
+        <SkeletonBox className="h-3.5 w-24" />
+      </div>
+    </div>
+  );
+}
+
+/* Grid of product category skeletons */
+export function ProductCategoryGridSkeleton({ count = 6 }: { count?: number }) {
+  return (
+    <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {Array.from({ length: count }).map((_, i) => (
+        <li key={i}>
+          <ProductCategorySkeleton />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/* Category aliases for convenient importing */
+export const CategoryCardSkeleton = ProductCategorySkeleton;
+export const CategoryGridSkeleton = ProductCategoryGridSkeleton;
+export const CategorySkeleton = ProductCategorySkeleton;
+
+
 /* Product detail skeleton — 2-col on lg */
 export function ProductDetailSkeleton() {
   return (
