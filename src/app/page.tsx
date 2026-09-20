@@ -11,6 +11,7 @@ import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { CountdownTimer } from "@/components/ui/countdown-timer";
 import { toast } from "@/components/admin/toast";
 import type { Category, Product } from "@/types/api";
+import { Spinner } from "@/components/ui/spinner";
 
 const CATEGORY_ICONS: Record<string, string> = {
   Smartphones: "📱",
@@ -279,40 +280,43 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((cat, idx) => {
-              const icon = CATEGORY_ICONS[cat.name] ?? "⚡";
-              return (
-                <Link
-                  key={cat.id}
-                  href={`/products?categoryId=${cat.id}`}
-                  className="group"
-                >
-                  <SpotlightCard className="h-full cursor-pointer transition-transform duration-300 group-hover:-translate-y-1">
-                    <div className="flex items-start justify-between">
-                      <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-500/20 bg-cyan-500/10 text-2xl shadow-sm transition group-hover:scale-110 group-hover:border-cyan-500/40">
-                        {icon}
-                      </span>
-                      <span className="rounded-full bg-slate-100 px-2.5 py-1 font-mono text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-400">
-                        CAT #{idx + 1}
-                      </span>
-                    </div>
-                    <h3 className="mt-4 font-heading text-xl font-bold text-slate-900 group-hover:text-cyan-500 dark:text-white dark:group-hover:text-cyan-400 transition-colors">
-                      {cat.name}
-                    </h3>
-                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                      Explore latest hardware and curated gadgets in this
-                      sector.
-                    </p>
-                    <div className="mt-4 flex items-center gap-1 font-heading text-xs font-bold text-cyan-600 dark:text-cyan-400">
-                      <span>Access Sector</span>
-                      <span className="transition-transform group-hover:translate-x-1">
-                        →
-                      </span>
-                    </div>
-                  </SpotlightCard>
-                </Link>
-              );
-            })}
+            {loading ? (
+              <Spinner />
+            ) : (
+              categories.map((cat, idx) => {
+                const icon = CATEGORY_ICONS[cat.name] ?? "⚡";
+                return (
+                  <Link
+                    key={cat.id}
+                    href={`/products?categoryId=${cat.id}`}
+                    className="group"
+                  >
+                    <SpotlightCard className="h-full cursor-pointer transition-transform duration-300 group-hover:-translate-y-1">
+                      <div className="flex items-start justify-between">
+                        <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-500/20 bg-cyan-500/10 text-2xl shadow-sm transition group-hover:scale-110 group-hover:border-cyan-500/40">
+                          {icon}
+                        </span>
+                        <span className="rounded-full bg-slate-100 px-2.5 py-1 font-mono text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                          CAT #{idx + 1}
+                        </span>
+                      </div>
+                      <h3 className="mt-4 font-heading text-xl font-bold text-slate-900 group-hover:text-cyan-500 dark:text-white dark:group-hover:text-cyan-400 transition-colors">
+                        {cat.name}
+                      </h3>
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                        Explore latest hardware and curated gadgets in this
+                        sector.
+                      </p>
+                      <div className="mt-4 flex items-center gap-1 font-heading text-xs font-bold text-cyan-600 dark:text-cyan-400">
+                        <span>Access Sector</span>
+                        <span className="transition-transform group-hover:translate-x-1">
+                          →
+                        </span>
+                      </div>
+                    </SpotlightCard>
+                  </Link>
+                );
+              })}
           </div>
         </div>
       </section>
